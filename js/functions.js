@@ -1,4 +1,4 @@
-// Функция для проверки длины строки
++// Функция для проверки длины строки
 function checkStringLength(str, maxLength) {
   return str.length <= maxLength;
 }
@@ -36,4 +36,3 @@ function addPadding(str, length, padding) {
 
   return result.slice(0, paddingLength) + str;
 }
-
