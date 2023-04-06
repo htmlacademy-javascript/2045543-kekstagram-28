@@ -12,3 +12,8 @@ export function getAllElements(selector, parent = document) {
   return parent.querySelectorAll(selector);
 }
 
+export function createElementWithClass(tagName, className) {
+  const element = document.createElement(tagName);
+  element.classList.add(className);
+  return element;
+}

@@ -1,4 +1,5 @@
-import { getElement, getAllElements } from './util.js';
+import { getElement } from './util.js';
+import { onEscKeyDown, onClose, closeBigPicture } from './big-picture-controls.js';
 
 export const openBigPicture = (picture) => {
   const bigPicture = getElement('.big-picture');
@@ -44,36 +45,6 @@ export const openBigPicture = (picture) => {
 
   document.body.classList.add('modal-open');
 
-  const closeBigPicture = () => {
-    bigPicture.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-    document.removeEventListener('keydown', onEscKeyDown);
-  };
-
-  const onEscKeyDown = (evt) => {
-    if (evt.key === 'Escape' || evt.key === 'Esc') {
-      closeBigPicture();
-    }
-  };
-
-  bigPictureCloseButton.addEventListener('click', closeBigPicture);
-  document.addEventListener('keydown', onEscKeyDown);
+  bigPictureCloseButton.addEventListener('click', () => closeBigPicture(bigPicture, onClose, onEscKeyDown));
+  document.addEventListener('keydown', (evt) => onEscKeyDown(evt, () => closeBigPicture(bigPicture, onClose, onEscKeyDown)));
 };
-
-export function renderPictures(photos) {
-  const template = document.querySelector('#picture').content.querySelector('.picture');
-  const container = document.querySelector('.pictures');
-  const fragment = document.createDocumentFragment();
-
-  photos.forEach((photo) => {
-    const pictureElement = template.cloneNode(true);
-
-    pictureElement.querySelector('.picture__img').src = photo.url;
-    pictureElement.querySelector('.picture__likes').textContent = photo.likes;
-    pictureElement.querySelector('.picture__comments').textContent = photo.comments.length;
-
-    fragment.appendChild(pictureElement);
-  });
-
-  container.appendChild(fragment);
-}
