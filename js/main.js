@@ -7,3 +7,4 @@ const picturesContainer = document.querySelector('.pictures');
 
 renderPhotos(picturesContainer, photos);
 handlePhotoClick(picturesContainer, photos);
+

@@ -1,7 +1,7 @@
 import { getElement } from './util.js';
 import { openBigPicture } from './preview.js';
 
-export function createPhotoThumbnail(photo) {
+export function createPhotoThumbnail(photo, commentsStep = 2) {
   const template = getElement('#picture').content;
   const photoElement = template.cloneNode(true);
 
@@ -15,7 +15,7 @@ export function createPhotoThumbnail(photo) {
   commentsElement.textContent = photo.comments.length;
 
   photoElement.querySelector('.picture').addEventListener('click', () => {
-    openBigPicture(photo);
+    openBigPicture(photo, commentsStep);
   });
 
   return photoElement;
