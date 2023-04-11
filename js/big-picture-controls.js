@@ -13,3 +13,4 @@ export const closeBigPicture = (bigPicture, closeCallback, escKeyDownCallback) =
   document.body.classList.remove('modal-open');
   closeCallback(escKeyDownCallback);
 };
+
