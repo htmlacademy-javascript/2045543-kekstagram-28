@@ -10,15 +10,10 @@ export function fetchData() {
     });
 }
 
-export function sendData(formData) {
+export function sendData(data) {
   return fetch(`${API_URL}`, {
     method: 'POST',
-    body: formData,
-  })
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error('Ошибка при отправке данных на сервер');
-    });
+    body: data,
+  });
 }
+
