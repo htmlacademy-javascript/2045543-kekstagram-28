@@ -1,11 +1,19 @@
-import { generatePhotos } from './data.js';
 import { renderPhotos } from './render-photos.js';
 import { handlePhotoClick } from './photo-click-handler.js';
 import { initUploadForm } from './upload-form.js';
+import { fetchData } from './api.js';
 
-const photos = generatePhotos();
 const picturesContainer = document.querySelector('.pictures');
 
-renderPhotos(picturesContainer, photos);
-handlePhotoClick(picturesContainer, photos);
+fetchData()
+  .then((photos) => {
+    renderPhotos(picturesContainer, photos);
+    handlePhotoClick(picturesContainer, photos);
+  })
+  .catch((error) => {
+    // eslint-disable-next-line no-console
+    console.error('Ошибка:', error);
+    // Обработка ошибок, например, можно показать сообщение об ошибке
+  });
+
 initUploadForm();

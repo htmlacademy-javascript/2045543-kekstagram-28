@@ -1,3 +1,5 @@
+import { noUiSlider } from './nouislider-wrapper.js';
+
 export function initUploadForm() {
   const form = document.querySelector('#upload-select-image');
   const submitButton = form.querySelector('#upload-submit');
@@ -42,6 +44,20 @@ export function initUploadForm() {
       // Отображение ошибок, если форма не валидна
     }
   });
+
+  // Создание слайдера с помощью noUiSlider
+  const sliderElement = document.querySelector('.effect-level__slider');
+  if (sliderElement) {
+    noUiSlider.create(sliderElement, {
+      start: [20],
+      range: {
+        'min': 0,
+        'max': 100
+      },
+      step: 1,
+      connect: 'lower'
+    });
+  }
 
   function openUploadForm() {
     imgUploadOverlay.classList.remove('hidden');
