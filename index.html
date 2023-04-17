@@ -116,7 +116,7 @@
                 <!-- Добавление хэш-тегов и комментария к изображению -->
                 <fieldset class="img-upload__text text">
                   <div class="img-upload__field-wrapper">
-                    <input class="text__hashtags" name="hashtags" placeholder="#ХэшТег" data-pristine-required maxlength="100" pattern="^(\s*#[A-Za-zА-Яа-я0-9]{1,19}\s*){0,5}$">
+                    <input class="text__hashtags" name="hashtags" placeholder="#ХэшТег" data-pristine-required maxlength="100" data-pristine-pattern="/^(\s*#[A-Za-zА-Яа-я0-9]{1,19}\s*){0,5}$/i">
                   </div>
                   <div class="img-upload__field-wrapper">
                     <textarea class="text__description" name="description" placeholder="Ваш комментарий..." required></textarea>
@@ -180,12 +180,13 @@
           <button type="button" class="social__comments-loader  comments-loader">Загрузить еще</button>
 
           <!-- Форма для отправки комментария -->
-          <div class="social__footer">
+         <!-- Форма для отправки комментария -->
+            <div class="social__footer">
             <img class="social__picture" src="img/avatar-6.svg" alt="Аватар комментатора фотографии" width="35" height="35">
-            <input type="text" class="social__footer-text" placeholder="Ваш комментарий..." maxlength="140">
-            <button type="button" class="social__footer-btn" name="button">Отправить</button>
-          </div>
-        </div>
+            <input type="text" class="social__footer-text" placeholder="Ваш комментарий..." maxlength="140" name="comment" id="comment">
+            <button type="button" class="social__footer-btn" name="submit" id="submit">Отправить</button>
+            </div>
+
 
         <!-- Кнопка для выхода из полноэкранного просмотра изображения -->
         <button type="reset" class="big-picture__cancel  cancel" id="picture-cancel">Закрыть</button>
@@ -241,8 +242,8 @@
   <template id="messages">
     <div class="img-upload__message  img-upload__message--loading">Загружаем...</div>
   </template>
-<script src="/vendor/pristine/pristine.min.js"></script>
- <script type="module" src="js/main.js"></script>
- <script src="vendor/nouislider/nouislider.js"></script>
+  <script src="vendor/nouislider/nouislider.js"></script>
+  <script src="/vendor/pristine/pristine.min.js"></script>
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>

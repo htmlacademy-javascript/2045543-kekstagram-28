@@ -1,3 +1,4 @@
+import { sendData } from './api.js';
 import { noUiSlider } from './nouislider-wrapper.js';
 
 export function initUploadForm() {
@@ -23,10 +24,7 @@ export function initUploadForm() {
       // Отправка формы, если она валидна
       const formData = new FormData(form);
       submitButton.disabled = true; // блокировка кнопки отправки
-      fetch('https://28.javascript.pages.academy/kekstagram', {
-        method: 'POST',
-        body: formData,
-      })
+      sendData(formData)
         .then((response) => {
           submitButton.disabled = false; // разблокировка кнопки отправки
           if (response.ok) {
@@ -58,6 +56,69 @@ export function initUploadForm() {
       connect: 'lower'
     });
   }
+
+  // Изменение масштаба изображения
+  const scaleControlSmaller = document.querySelector('.scale__control--smaller');
+  const scaleControlBigger = document.querySelector('.scale__control--bigger');
+  const scaleControlValue = document.querySelector('.scale__control--value');
+  const imgUploadPreview = document.querySelector('.img-upload__preview img');
+
+  scaleControlSmaller.addEventListener('click', () => {
+    const currentValue = parseInt(scaleControlValue.value, 10);
+    const newValue = Math.max(currentValue - 25, 25);
+    scaleControlValue.value = `${newValue}%`;
+    imgUploadPreview.style.transform = `scale(${newValue / 100})`;
+  });
+
+  scaleControlBigger.addEventListener('click', () => {
+    const currentValue = parseInt(scaleControlValue.value, 10);
+    const newValue = Math.min(currentValue + 25, 100);
+    scaleControlValue.value = `${newValue}%`;
+    imgUploadPreview.style.transform = `scale(${newValue / 100})`;
+  });
+
+  // Наложение эффекта на изображение
+  const effectRadioButtons = document.querySelectorAll('.effects__radio');
+  const effectLevelValue = document.querySelector('.effect-level__value');
+  const effectLevelSlider = document.querySelector('.img-upload__effect-level');
+  effectRadioButtons.forEach((radio) => {
+    radio.addEventListener('change', () => {
+      const effect = radio.value;
+      imgUploadPreview.className = '';
+      imgUploadPreview.classList.add(`effects__preview--${effect}`);
+
+      if (effect === 'none') {
+        effectLevelSlider.classList.add('hidden');
+      } else {
+        effectLevelSlider.classList.remove('hidden');
+      }
+
+      sliderElement.noUiSlider.on('update', (_, handle, unencoded) => {
+        const value = unencoded[handle];
+        effectLevelValue.value = value;
+
+        switch (effect) {
+          case 'chrome':
+            imgUploadPreview.style.filter = `grayscale(${value / 100})`;
+            break;
+          case 'sepia':
+            imgUploadPreview.style.filter = `sepia(${value / 100})`;
+            break;
+          case 'marvin':
+            imgUploadPreview.style.filter = `invert(${value}%)`;
+            break;
+          case 'phobos':
+            imgUploadPreview.style.filter = `blur(${value * 3 / 100}px)`;
+            break;
+          case 'heat':
+            imgUploadPreview.style.filter = `brightness(${1 + (value * 2 / 100)})`;
+            break;
+          default:
+            imgUploadPreview.style.filter = '';
+        }
+      });
+    });
+  });
 
   function openUploadForm() {
     imgUploadOverlay.classList.remove('hidden');
@@ -93,3 +154,4 @@ function showErrorMessage() {
     errorMessage.remove();
   });
 }
+
